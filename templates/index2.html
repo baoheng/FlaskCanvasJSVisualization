@@ -15,9 +15,14 @@
 
       <div id="chartHolder" style="height: 300px; width: 100%; position:relative;">
       </div>
-      <div id="slider" style="width: 200px;"></div>
+      <div class="container" id="slider" style="width: 200px;"></div>
+      <div class="container text-center" id="label"></div>
       <script type="text/javascript">
           $(function(){
+              var chartInfo= {};
+          {% for year, json in chart_info.items() %}
+                chartInfo[{{ year }}] = {{ json|safe }};
+          {% endfor %}
               $("#slider").slider({
                   min: 1990,
                   max: 2016,
@@ -26,39 +31,59 @@
                   animate: true,
                   orientation: "horizontal",
                   range: false,
-                  value: 1990,
+                  value: 2016,
                   create: function(event, ui){
-                      {% for year, json in chart_info.items() %}
-                          {% if year == 1990 %}
-                                $("#chartHolder").CanvasJSChart({
-		                            title:{
-			                            text: "Pie Chart for {{ year }}"
-                                    },
-		                            legend: {
-			                            maxWidth: 350,
-			                            itemWidth: 120
-                                    },
-		                            data: [{{ json | safe }}]
-	                                });
-                          {% endif %}
-                      {% endfor %}
+                      $("#label").text($("#slider").slider("value"));
+                      for(year in chartInfo) {
+                          if(year == 2016) {
+                              $("#chartHolder").CanvasJSChart({
+                                  title: {
+                                      text: "Pie Chart for " + year
+                                  },
+                                  legend: {
+                                      maxWidth: 350,
+                                      itemWidth: 120
+                                  },
+                                  data: [chartInfo[year]]
+                              });
+                          }
+                      }
                   },
                   slide: function(event, ui){
                       var value = $(this).slider("value");
-                      {% for year, json in chart_info.items() %}
-                          {% if year|int() == value|int() %}
-                                $("#chartHolder").CanvasJSChart({
-		                            title:{
-			                            text: "Pie Chart for {{ year }}"
-                                    },
-		                            legend: {
-			                            maxWidth: 350,
-			                            itemWidth: 120
-                                    },
-		                            data: [{{ json | safe }}]
-	                                });
-                          {% endif %}
-                      {% endfor %}
+                      $("#label").text($("#slider").slider("value"));
+                     for(year in chartInfo) {
+                          if(year == value) {
+                              $("#chartHolder").CanvasJSChart({
+                                  title: {
+                                      text: "Pie Chart for " + year
+                                  },
+                                  legend: {
+                                      maxWidth: 350,
+                                      itemWidth: 120
+                                  },
+                                  data: [chartInfo[year]]
+                              });
+                          }
+                      }
+                  },
+                  change: function(event, ui){
+                      var value = $(this).slider("value");
+                      $("#label").text($("#slider").slider("value"));
+                     for(year in chartInfo) {
+                          if(year == value) {
+                              $("#chartHolder").CanvasJSChart({
+                                  title: {
+                                      text: "Pie Chart for " + year
+                                  },
+                                  legend: {
+                                      maxWidth: 350,
+                                      itemWidth: 120
+                                  },
+                                  data: [chartInfo[year]]
+                              });
+                          }
+                      }
                   }
               });
           });

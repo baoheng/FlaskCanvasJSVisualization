@@ -17,7 +17,7 @@ def index():
 
 
 def input_file_by_year():
-    f = load_workbook(filename="G:\PycharmProjects\hello_flask\static\Debt Affordability Study Data.xlsx", read_only=True, use_iterators=True)
+    f = load_workbook(filename="static\Debt Affordability Study Data.xlsx", read_only=True, use_iterators=True)
     data_by_year = {}
     for row in f["Bond Issuance (Granular Data)"].iter_rows(row_offset=2):
         if row[3].value not in data_by_year.keys():
