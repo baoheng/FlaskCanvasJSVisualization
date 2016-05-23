@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="static/Bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>
+  <body>
+      <script type="text/javascript" src="static/jquery-1.12.3.min.js"></script>
+      <script type="text/javascript" src="static/canvasjs-1.8.0/jquery.canvasjs.min.js"></script>
+            <script type="text/javascript" src="\static\Bootstrap\js/bootstrap.min.js"></script>
+      <div class="container">
+        <ul class="nav nav-tabs list-inline" id="yearTab">
+            {% for year in chart_info.keys() %}
+            <li><a href="#{{ year }}" data-toggle="tab">{{ year }}</a> </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for year in chart_info.keys() %}
+            <div class="tab-pane" id="{{ year }}" style="height: 300px; width: 100%; padding-top: 20px"></div>
+            {% endfor %}
+        </div>
+      </div>
+        <script type="text/javascript">
+          $("#yearTab li:first-child").addClass("active");
+          $(".tab-content .tab-pane:first-child").addClass("active");
+          {% for year, json in chart_info.items() %}
+	        $("#{{ year }}").CanvasJSChart({
+		        title:{
+			        text: "Pie Chart for {{ year }}"
+                },
+		        legend: {
+			    maxWidth: 350,
+			    itemWidth: 120
+		        },
+		    data: [{{ json | safe }}]
+	        });
+          {% endfor %}
+    </script>
+  </body>
+</html>

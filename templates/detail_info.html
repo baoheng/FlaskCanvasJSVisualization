@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../static/Bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet"/>
+</head>
+<body>
+<script type="text/javascript" src="../static/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="../static/canvasjs-1.8.0/canvasjs.min.js"></script>
+<script type="text/javascript" src="../static/canvasjs-1.8.0/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="../static/Bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/jquery-ui-1.11.4/jquery-ui.js"></script>
+
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="{{ request.path }}" class="navbar-brand">{{ title }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main container">
+        <h2>Information Table</h2>
+        {% for key, item in detail_info.items() %}
+        <table class="table table-bordered">
+            <tbody>
+                {% for category in item.keys() %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ item[category] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
