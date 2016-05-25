@@ -3,7 +3,7 @@ import json
 
 
 def input_file():
-    f = load_workbook(filename='G:\PycharmProjects\hello_flask\static\Debt Affordability Study Data.xlsx',
+    f = load_workbook(filename='static\Debt Affordability Study Data.xlsx',
                       data_only=True)
     ws = f["Bonds Outstanding (Grandular)"]
     col_title = {}
